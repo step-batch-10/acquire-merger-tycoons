@@ -18,7 +18,7 @@ const renderWaitingList = () => {
 
     if (res.status === "START") {
       clearInterval(intervalId);
-      globalThis.location = "/game.html";
+      globalThis.location = "/gameSetup";
     }
 
     const players = res.players;

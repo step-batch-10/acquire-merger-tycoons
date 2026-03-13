@@ -22,6 +22,7 @@ export class StdGame implements Game {
   private players: Player[];
   private currentPlayerIndex: number;
   private mode: null | string;
+  private nextTile: undefined | string;
 
   constructor(
     tiles: Tile[],
@@ -58,6 +59,13 @@ export class StdGame implements Game {
 
   private assignTile(): void {
     const currentPlayer = this.players[this.currentPlayerIndex];
+
+    if (this.nextTile) {
+      currentPlayer.addTile(this.nextTile);
+      this.nextTile = undefined;
+      return;
+    }
+
     const [tile] = this.getTiles(1);
     currentPlayer.addTile(tile);
   }
@@ -339,5 +347,11 @@ export class StdGame implements Game {
     );
 
     return sortedByCash.at(-1)?.getPlayerDetails().playerId;
+  }
+
+  setNextTile(tile: Tile) {
+    this.nextTile = tile;
+
+    return tile;
   }
 }

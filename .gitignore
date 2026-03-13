@@ -4,3 +4,4 @@ public/.DS_Store
 public/script/spikes.js
 commit-msg.sh
 .DS_Store
+.vscode

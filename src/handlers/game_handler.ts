@@ -143,3 +143,11 @@ export const handleEndGame = (ctx: Context) => {
 
   return ctx.json({ winner });
 };
+
+export const setTile = (ctx: Context) => {
+  const game = ctx.get("game");
+  const tile = ctx.req.param("tile");
+  game.setNextTile(tile);
+
+  return ctx.text(tile);
+};

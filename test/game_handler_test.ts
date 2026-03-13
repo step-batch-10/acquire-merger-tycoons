@@ -26,7 +26,10 @@ describe("App: /login", () => {
     const gameManager = new GameManager(tileGenerator);
     const sessions = new Sessions(idGenerator);
     const app = createApp(sessions, gameManager);
-    const res = await app.request("/login", { method: "POST", body: formData });
+    const res = await app.request("/loginDetails", {
+      method: "POST",
+      body: formData,
+    });
 
     assertEquals(res.headers.getSetCookie(), ["sessionId=1; Path=/"]);
     assertEquals(res.status, 303);
@@ -39,21 +42,21 @@ describe("App: /login", () => {
     const sessions = new Sessions(idGenerator);
     sessions.addPlayer("likhi");
     const app = createApp(sessions, gameManager);
-    const res = await app.request("/login.html", {
+    const res = await app.request("/login", {
       headers: { cookie: "sessionId=1;gameId=1" },
     });
 
     assertEquals(res.status, 303);
   });
 
-  it("should open login.html if not logged in .", async () => {
+  it("should open login page if not logged in .", async () => {
     const idGenerator = () => "1";
     const tileGenerator = () => ["1A"];
     const gameManager = new GameManager(tileGenerator);
     const sessions = new Sessions(idGenerator);
     const app = createApp(sessions, gameManager);
 
-    const res = await app.request("/login.html");
+    const res = await app.request("/login");
     await res.text();
     assertEquals(res.status, 200);
   });
@@ -157,7 +160,7 @@ describe("App: /", () => {
     });
 
     assertEquals(res.status, 303);
-    assertEquals(res.headers.get("location"), "/lobby.html");
+    assertEquals(res.headers.get("location"), "/lobby");
   });
 
   it("should redirect to game page when three players started the game", async () => {
@@ -181,7 +184,7 @@ describe("App: /", () => {
     });
 
     assertEquals(res.status, 303);
-    assertEquals(res.headers.get("location"), "/game.html");
+    assertEquals(res.headers.get("location"), "/gameSetup");
   });
 
   it("should redirect to game page when accessing lobby", async () => {
@@ -198,14 +201,14 @@ describe("App: /", () => {
     lobby.addToWaitingList("2", gameManager, sessions.getPlayer(p3));
 
     const app = createApp(sessions, gameManager, lobby);
-    const res = await app.request("/lobby.html", {
+    const res = await app.request("/lobby", {
       headers: {
         cookie: "sessionId=1;gameId=3",
       },
     });
 
     assertEquals(res.status, 303);
-    assertEquals(res.headers.get("location"), "/game.html");
+    assertEquals(res.headers.get("location"), "/gameSetup");
   });
 
   it("should redirect to game page when accessing game", async () => {
@@ -222,7 +225,7 @@ describe("App: /", () => {
     lobby.addToWaitingList("2", gameManager, sessions.getPlayer(p3));
 
     const app = createApp(sessions, gameManager, lobby);
-    const res = await app.request("/game.html", {
+    const res = await app.request("/gameSetup", {
       headers: {
         cookie: "sessionId=1;gameId=3",
       },
@@ -246,14 +249,14 @@ describe("App: /", () => {
     });
 
     const app = createApp(sessions, gameManager);
-    const res = await app.request("/game.html", {
+    const res = await app.request("/gameSetup", {
       headers: {
         cookie: "sessionId=1;gameId=0",
       },
     });
 
     assertEquals(res.status, 303);
-    assertEquals(res.headers.get("location"), "/lobby.html");
+    assertEquals(res.headers.get("location"), "/lobby");
   });
 
   it("should remove cookies when logout", async () => {
@@ -289,7 +292,7 @@ describe("App: /", () => {
     lobby.addToWaitingList("1", gameManager, sessions.getPlayer(p1));
 
     const app = createApp(sessions, gameManager);
-    const res = await app.request("/lobby.html", {
+    const res = await app.request("/lobby", {
       headers: {
         cookie: "sessionId=1;gameId=2",
       },
@@ -325,7 +328,7 @@ describe("App: /", () => {
     sessions.addPlayer("Krishna");
 
     const app = createApp(sessions, gameManager);
-    const res = await app.request("/game.html", {
+    const res = await app.request("/gameSetup", {
       headers: {
         cookie: "sessionId=1",
       },
@@ -343,7 +346,7 @@ describe("App: /", () => {
     sessions.addPlayer("Krishna");
 
     const app = createApp(sessions, gameManager);
-    const res = await app.request("/lobby.html", {
+    const res = await app.request("/lobby", {
       headers: {
         cookie: "sessionId=1",
       },
@@ -831,6 +834,38 @@ describe("handleMerge() method", () => {
       });
 
       assertEquals(res.status, 303);
+    });
+  });
+});
+
+describe("setTile() handler", () => {
+  const createTestAppWithGame = () => {
+    const gameManager = new GameManager();
+    const sessions = new Sessions(() => "1");
+    const imperial = new Hotel("Imperial", 2);
+    const board = new Board([imperial]);
+    const game = new StdGame(["1A"], createPlayers("player1"), board);
+    const app = createApp(sessions, gameManager);
+    const currentGame = new CurrentGame(game);
+
+    stub(sessions, "isSessionIdExist", () => true);
+    stub(game, "setNextTile", (tile) => tile);
+    stub(gameManager, "getCurrentGame", () => currentGame);
+
+    return { app };
+  };
+
+  describe("GET /acquire/set-tile/:tile", () => {
+    it("should call setNextTile and return the tile", async () => {
+      const { app } = createTestAppWithGame();
+
+      const res = await app.request("/acquire/set-tile/5A", {
+        method: "GET",
+        headers: { cookie: "sessionId=0;gameId=1" },
+      });
+
+      assertEquals(res.status, 200);
+      assertEquals(await res.text(), "5A");
     });
   });
 });

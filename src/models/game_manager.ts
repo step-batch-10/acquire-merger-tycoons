@@ -7,16 +7,17 @@ import { Player } from "./player.ts";
 import { Board } from "./board.ts";
 
 export const createHotels = (): Hotel[] => {
-  const hotelTexts = `Tower:0,Sackson:0,
-    Festival:1,American:1,Worldwide:1,
-    Imperial:2,Continental:2`.split(",");
+  const hotelData = [
+    { name: "Tower", rank: 0 },
+    { name: "Sackson", rank: 0 },
+    { name: "Festival", rank: 1 },
+    { name: "American", rank: 1 },
+    { name: "Worldwide", rank: 1 },
+    { name: "Imperial", rank: 2 },
+    { name: "Continental", rank: 2 },
+  ];
 
-  const toHotel = (text: string) => {
-    const [name, rankText] = text.trim().split(":");
-    return new Hotel(name, +rankText);
-  };
-
-  return _.map(hotelTexts, toHotel);
+  return hotelData.map(({ name, rank }) => new Hotel(name, rank));
 };
 
 const tiles = JSON.parse(await Deno.readTextFile("./src/data/tiles.json"));
@@ -41,6 +42,7 @@ class GameManager {
   private createPlayers(playerIds: string[]): Player[] {
     return playerIds.map((playerId) => new Player(playerId));
   }
+
   createGame(gameId: string, playerIds: string[]): StdGame {
     const game = new StdGame(
       this.tileGenerator(),

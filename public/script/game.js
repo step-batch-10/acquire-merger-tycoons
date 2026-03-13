@@ -57,6 +57,9 @@ const renderPlayerTiles = (tilesContainer, tiles) => {
 };
 
 const showStartingTilesPopup = async () => {
+  const hasPopupShown = localStorage.getItem("hasPopupShown");
+  if (hasPopupShown) return;
+
   toggleBlur();
   const stats = await getResource("/acquire/game-stats");
   const { playerPortfolio } = stats;
@@ -68,6 +71,7 @@ const showStartingTilesPopup = async () => {
     const popup = document.getElementById("tiles-popup");
     toggleBlur();
     popup.style.display = "none";
+    localStorage.setItem("hasPopupShown", "true");
   }, 2000);
 };
 
@@ -161,6 +165,7 @@ const startGamePolling = async (poller) => {
     await renderGameEndBtn();
     setTimeout(async () => {
       await fetch("/acquire/back-to-home");
+      localStorage.removeItem("hasPopupShown");
       globalThis.location = "/";
     }, 30000);
   }
@@ -180,7 +185,8 @@ const startGamePolling = async (poller) => {
 
 const handleLogout = async () => {
   await fetch("./logout", { method: "GET" });
-  globalThis.location.href = "./login.html";
+  localStorage.removeItem("hasPopupShown");
+  globalThis.location.href = "./login";
 };
 
 const logout = () => {

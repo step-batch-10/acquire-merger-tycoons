@@ -1268,4 +1268,48 @@ describe("Game model", () => {
       assertEquals(winner, "1");
     });
   });
+
+  describe("setNextTile() method", () => {
+    it("should set the next tile to be assigned", () => {
+      const board = new Board([]);
+      const game = new StdGame(
+        ["1A", "2A", "3A"],
+        createPlayers("player1 player2"),
+        board,
+      );
+
+      const result = game.setNextTile("5A");
+
+      assertEquals(result, "5A");
+    });
+  });
+
+  describe("changeTurn() and assignTile() method", () => {
+    it("should assign the set nextTile when changeTurn is called", () => {
+      const board = new Board([]);
+      const game = new StdGame(
+        ["1A", "2A", "3A", "4A"],
+        createPlayers("player1 player2"),
+        board,
+      );
+
+      game.getPlayerDetails("player1")?.tiles;
+      game.setNextTile("10A");
+      game.changeTurn();
+
+      const updatedTiles = game.getPlayerDetails("player1")?.tiles;
+
+      assertEquals(updatedTiles?.includes("10A"), true);
+    });
+
+    it("should assign nextTile even when game pile is empty", () => {
+      const board = new Board([]);
+      const game = new StdGame([], createPlayers("player1"), board);
+
+      game.setNextTile("1A");
+      game.changeTurn();
+      const playerTiles = game.getPlayerDetails("player1")?.tiles;
+      assertEquals(playerTiles?.includes("1A"), true);
+    });
+  });
 });
