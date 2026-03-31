@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Roles</title>
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        background-color: #f4f4f4;
+        color: #1f2937;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .roles {
+        width: 70%;
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .roles h1 {
+        text-align: center;
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 5rem;
+        color: #222;
+      }
+
+      .roles h3 {
+        font-size: 2.5rem;
+        font-weight: 500;
+        margin: 3.5rem 0;
+        color: #374151;
+      }
+
+      .nav-buttons {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 30px;
+        pointer-events: none;
+      }
+
+      .nav-button {
+        width: 48px;
+        height: 48px;
+        background-color: #b49778;
+        border: none;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        pointer-events: auto;
+      }
+
+      .nav-button:hover {
+        background-color: #91795f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="roles">
+      <h1>ROLES</h1>
+      <h3><b>BA</b>: Likhitha</h3>
+      <h3><b>QA</b>: Mohammadh Siddique</h3>
+      <h3>
+        <b>Devs</b>: Adhithyan MR, Krishnanandh Mishra, Malleswari, Pradeep
+        Bisht, Pragna, Sudheer
+      </h3>
+    </div> 
+    </div>   
+    <div class="nav-buttons">
+      <button class="nav-button" onclick="goToPreviousSlide()">
+        ←
+      </button>
+      <button class="nav-button" onclick="goToNextSlide()">
+        →
+      </button>
+    </div>
+    <script>
+      function goToNextSlide() {
+        window.location.href = "slide3.html";
+      }
+      function goToPreviousSlide() {
+        window.location.href = "slide1.html";
+      }
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowRight") {
+          goToNextSlide();
+        }
+        if (event.key === "ArrowLeft") {
+          goToPreviousSlide();
+        }
+      });
+    </script>
+  </body>
+</html>

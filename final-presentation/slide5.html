@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iteration Points Bar Chart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+      .chart-container {
+        width: 80%;
+        padding: 20px;
+        background-color: white;
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
+      .chart-title {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+      #myChart {
+        width: 100%;
+        height: auto;
+      }
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        width: 100%;
+        padding: 0 5%;
+        position: absolute;
+        left: 0;
+        top: 49%;
+        transform: translateY(-50%);
+        box-sizing: border-box;
+      }
+
+      .nav-button {
+        width: 48px;
+        height: 48px;
+        background-color: #b49778;
+        border: none;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 0 30px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .nav-button:hover {
+        background-color: #91795f;
+      }
+
+      .prev-button {
+        left: 0;
+      }
+
+      .next-button {
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chart-container">
+      <h2 class="chart-title">Points Planned per Iteration</h2>
+      <canvas id="myChart"></canvas>
+    </div>
+    
+    <div class="button-container">
+      <button class="nav-button prev-button" onclick="goToPreviousSlide()">
+        ←
+      </button>
+      <button class="nav-button next-button" onclick="goToNextSlide()">
+        →
+      </button>
+    </div>
+    <script>
+      function goToPreviousSlide() {
+        window.location.href = "slide4.html";
+      }
+      function goToNextSlide() {
+        window.location.href = "slide6.html";
+      }
+      const ctx = document.getElementById("myChart").getContext("2d");
+      const plannedPointsData = [16, 15, 21, 30];
+
+      const chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["Iteration 1", "Iteration 2", "Iteration 3", "Iteration 4"],
+          datasets: [
+            {
+              label: "Points Planned",
+              data: plannedPointsData,
+              backgroundColor: ["#4CAF50", "#2196F3", "#FFC107", "#E57373"],
+              borderColor: ["#4CAF50", "#2196F3", "#FFC107", "#E57373"],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: false,
+              text: "Points Planned per Iteration",
+              font: {
+                size: 16,
+              },
+            },
+            legend: {
+              display: false,
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                font: {
+                  size: 30,
+                },
+              },
+            },
+            x: {
+              ticks: {
+                font: {
+                  size: 30,
+                },
+              },
+            },
+          },
+        },
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowRight") {
+          goToNextSlide();
+        }
+        if (event.key === "ArrowLeft") {
+          goToPreviousSlide();
+        }
+      });
+    </script>
+  </body>
+</html>

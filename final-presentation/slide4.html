@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Language Representation</title>
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        background-color: #f3f4f6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Inter", sans-serif;
+        color: #1f2937;
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1400px;
+        background-color: white;
+        padding: 60px 40px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+      }
+
+      .heading {
+        font-size: 3rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 60px;
+        color: #111827;
+      }
+
+      .bar-container {
+        display: flex;
+        width: 100%;
+        height: 80px;
+        margin-bottom: 40px;
+        background-color: #e5e7eb;
+      }
+
+      .bar-segment {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: white;
+      }
+
+      .label-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        text-align: center;
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: #374151;
+      }
+
+      .label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .button-container {
+        position: fixed;
+        width: 100%;
+        top: 50%;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 40px;
+        transform: translateY(-50%);
+        box-sizing: border-box;
+        pointer-events: none;
+      }
+
+      .nav-button {
+        width: 48px;
+        height: 48px;
+        font-size: 28px;
+        background-color: #b49778;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        pointer-events: auto;
+      }
+
+      .nav-button:hover {
+        background-color: #91795f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="heading">Analysis</h1>
+      <div class="bar-container" id="barContainer"></div>
+      <div class="label-container" id="labelContainer"></div>
+    </div>
+
+    <div class="button-container">
+      <button class="nav-button" onclick="goToPreviousSlide()">
+        ←
+      </button>
+      <button class="nav-button" onclick="goToNextSlide()">
+        →
+      </button>
+    </div>
+
+    <script>
+      const languageData = [
+        { name: "HTML", lines: 236, color: "#ff5454" },
+        { name: "CSS", lines: 807, color: "#288ce4" },
+        { name: "JavaScript", lines: 982, color: "#ff7c14", textColor: "#000" },
+        { name: "TypeScript (Src)", lines: 1480, color: "#8054f4" },
+        { name: "TypeScript (Tests)", lines: 2911, color: "#2EA47A" },
+      ];
+
+      const totalLines = languageData.reduce(
+        (sum, item) => sum + item.lines,
+        0
+      );
+
+      const barContainer = document.getElementById("barContainer");
+      const labelContainer = document.getElementById("labelContainer");
+
+      languageData.forEach((item) => {
+        const percent = (item.lines / totalLines) * 100;
+
+        const bar = document.createElement("div");
+        bar.className = "bar-segment";
+        bar.style.flexBasis = `${percent}%`;
+        bar.style.backgroundColor = item.color;
+        if (item.textColor) bar.style.color = item.textColor;
+        bar.innerText = "";
+
+        const label = document.createElement("div");
+        label.className = "label";
+        label.style.flexBasis = `${percent}%`;
+        label.innerHTML = `<span>${item.name}</span><span>${item.lines} Lines</span>`;
+
+        barContainer.appendChild(bar);
+        labelContainer.appendChild(label);
+      });
+
+      function goToPreviousSlide() {
+        window.location.href = "slide3.html";
+      }
+
+      function goToNextSlide() {
+        window.location.href = "slide5.html";
+      }
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowRight") {
+          goToNextSlide();
+        }
+        if (event.key === "ArrowLeft") {
+          goToPreviousSlide();
+        }
+      });
+    </script>
+  </body>
+</html>

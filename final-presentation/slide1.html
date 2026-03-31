@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ACQUIRE - The Merger Tycoons</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f8f8f8;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .row {
+        width: 60%;
+        height: 12%;
+        display: flex;
+        gap: 2%;
+        margin: 12px 0;
+      }
+
+      .name {
+        margin-bottom: 5%;
+        font-size: 30px;
+      }
+
+      .square {
+        width: 14%;
+        height: 100%;
+        background-color: #b49778;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+        box-shadow: 0px 0px 25px gray;
+        transition: transform 0.2s, background 0.3s;
+      }
+
+      .square:hover {
+        transform: scale(1.05);
+        background-color: #91795f;
+      }
+
+      .hotel {
+        color: white;
+        background-repeat: no-repeat;
+        background-size: 70%;
+        background-position-x: center;
+        background-position-y: top;
+      }
+
+      .head {
+        font-size: 50px;
+      }
+
+      .hotel:nth-child(1) {
+        background-color: #2ea47a;
+        background-image: url("hotels/festival.png");
+      }
+      .hotel:nth-child(2) {
+        background-color: #28c4e4;
+        background-image: url("hotels/continental.png");
+      }
+      .hotel:nth-child(3) {
+        background-color: #ff7c14;
+        background-image: url("hotels/imperial.png");
+      }
+      .hotel:nth-child(4) {
+        background-color: #8054f4;
+        background-image: url("hotels/worldwide.png");
+      }
+      .hotel:nth-child(5) {
+        background-color: #288ce4;
+        background-image: url("hotels/american.png");
+      }
+      .hotel:nth-child(6) {
+        background-color: #ffb404;
+        background-image: url("hotels/tower.png");
+      }
+      .hotel:nth-child(7) {
+        background-color: #ff5454;
+        background-image: url("hotels/sackson.png");
+      }
+
+      .team-name {
+        margin-top: 30px;
+        font-size: 26px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .tagline {
+        font-size: 24px;
+        font-style: italic;
+        margin-top: 6px;
+        color: #666666;
+      }
+
+      .nav-buttons {
+        position: absolute;
+        right: 20px;
+      }
+
+      .nav-button {
+        width: 48px;
+        height: 48px;
+        background-color: #b49778;
+        border: none;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .nav-button:hover {
+        background-color: #91795f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row name">
+      <div class="square head">A</div>
+      <div class="square head">C</div>
+      <div class="square head">Q</div>
+      <div class="square head">U</div>
+      <div class="square head">I</div>
+      <div class="square head">R</div>
+      <div class="square head">E</div>
+    </div>
+
+    <div class="row">
+      <div class="square hotel"><br /><br /><br />Festival</div>
+      <div class="square hotel"><br /><br /><br />Continental</div>
+      <div class="square hotel"><br /><br /><br />Imperial</div>
+      <div class="square hotel"><br /><br /><br />Worldwide</div>
+      <div class="square hotel"><br /><br /><br />American</div>
+      <div class="square hotel"><br /><br /><br />Tower</div>
+      <div class="square hotel"><br /><br /><br />Sackson</div>
+    </div>
+
+    <div class="team-name">by The Merger Tycoons</div>
+    <div class="tagline" style="font-size: 20px">
+      Strategizing Success One Merger at a Time
+    </div>
+
+    <div class="nav-buttons">
+      <button class="nav-button" onclick="goToNextSlide()">→</button>
+    </div>
+
+    <script>
+      function goToNextSlide() {
+        window.location.href = "slide2.html";
+      }
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowRight") {
+          goToNextSlide();
+        }
+      });
+    </script>
+  </body>
+</html>

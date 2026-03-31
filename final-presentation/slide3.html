@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ACQUIRE Game - Slide 3</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f8f8f8;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        width: 70%;
+        background-color: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 50px;
+      }
+
+      table {
+        width: 80%;
+        border-collapse: collapse;
+        margin: 20px auto;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+        font-size: 30px;
+        overflow: hidden;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+        color: #333;
+      }
+
+      td {
+        background-color: white;
+      }
+
+      tr:nth-child(even) td {
+        background-color: #f8f8f8;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      @media (max-width: 600px) {
+        table {
+          border: 0;
+        }
+
+        thead {
+          display: none;
+        }
+
+        tr {
+          margin-bottom: 15px;
+          display: block;
+          border-bottom: 2px solid #e0e0e0;
+        }
+
+        td {
+          display: block;
+          text-align: right;
+          padding-left: 50%;
+          position: relative;
+          border: none;
+        }
+
+        td:before {
+          content: attr(data-label);
+          position: absolute;
+          left: 0;
+          width: 50%;
+          padding-left: 0;
+          font-weight: bold;
+          text-align: left;
+        }
+      }
+
+      .nav-buttons {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+      }
+
+      .nav-button {
+        width: 48px;
+        height: 48px;
+        background-color: #b49778;
+        border: none;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-left: 10px;
+      }
+
+      .nav-button:hover {
+        background-color: #91795f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Tasks</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>Story</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="3" data-label="Size">Medium</td>
+            <td data-label="Story">Two-hotel merging</td>
+            <td data-label="Status">Done</td>
+          </tr>
+          <tr>
+            <td data-label="Story">Multi-hotel merging</td>
+            <td data-label="Status">In progress</td>
+          </tr>
+          <tr>
+            <td data-label="Story">Detect when game ends</td>
+            <td data-label="Status">Done</td>
+          </tr>
+          <tr>
+            <td rowspan="6" data-label="Size">Large</td>
+            <td data-label="Story">Display results</td>
+            <td data-label="Status">In progress</td>
+          </tr>
+          <tr>
+            <td data-label="Story">Remove dead tiles</td>
+            <td data-label="Status">Done</td>
+          </tr>
+          <tr>
+            <td data-label="Story">Multi-merging order</td>
+            <td data-label="Status">In progress</td>
+          </tr>
+          <tr>
+            <td data-label="Story">Bonus distribution of merge</td>
+            <td data-label="Status">Done</td>
+          </tr>
+          <tr>
+            <td data-label="Story">Distributing end-game bonuses</td>
+            <td data-label="Status">Done</td>
+          </tr>
+          <tr>
+            <td data-label="Story">Trade, sell, and keep stocks</td>
+            <td data-label="Status">Done</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="nav-buttons">
+      <button class="nav-button" onclick="goToPreviousSlide()">←</button>
+      <button class="nav-button" onclick="goToNextSlide()">→</button>
+    </div>
+    <script>
+      function goToPreviousSlide() {
+        window.location.href = "slide2.html";
+      }
+      function goToNextSlide() {
+        window.location.href = "slide4.html";
+      }
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowRight") {
+          goToNextSlide();
+        }
+        if (event.key === "ArrowLeft") {
+          goToPreviousSlide();
+        }
+      });
+    </script>
+  </body>
+</html>

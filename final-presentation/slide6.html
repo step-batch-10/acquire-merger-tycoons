@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Points Estimated vs. Completed</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f0f0f0;
+        color: #1f2937;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        box-sizing: border-box;
+      }
+
+      .chart-container {
+        background-color: white;
+        width: 80vw;
+        height: 70vh;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        padding: 10rem;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-sizing: border-box;
+      }
+
+      .slide-title {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-top: 7rem;
+        margin-bottom: 2rem;
+        color: #222;
+        text-align: center;
+        letter-spacing: -0.05em;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        width: 100%;
+        padding: 0 5%;
+        position: absolute;
+        left: 0;
+        top: 49%;
+        transform: translateY(-50%);
+        box-sizing: border-box;
+      }
+
+      .nav-button {
+        width: 48px;
+        height: 48px;
+        background-color: #b49778;
+        border: none;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 0 30px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .nav-button:hover {
+        background-color: #91795f;
+      }
+
+      .prev-button {
+        left: 0;
+      }
+
+      .next-button {
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="slide-container">
+      <div class="chart-container" style="padding-top: 1rem">
+        <h1 class="slide-title">Points Estimated vs. Completed</h1>
+        <canvas id="pointsChart" width="400" height="200"></canvas>
+      </div>
+    </div>
+    
+    <div class="button-container">
+      <button class="nav-button prev-button" onclick="goToPreviousSlide()">
+        ←
+      </button>
+      <button class="nav-button next-button" onclick="goToNextSlide()">
+        →
+      </button>
+    </div>
+    <script>
+      const ctx = document.getElementById("pointsChart").getContext("2d");
+
+      const initialData = {
+        labels: [
+          "Iteration 0",
+          "Iteration 1",
+          "Iteration 2",
+          "Iteration 3",
+          "Iteration 4",
+        ],
+        datasets: [
+          {
+            label: "Points Estimated",
+            data: [0, 16, 15, 21, 13],
+            borderColor: "#ef4444",
+            fill: false,
+            tension: 0,
+            borderWidth: 2,
+            pointRadius: 5,
+            pointBackgroundColor: "#ef4444",
+          },
+          {
+            label: "Points Completed",
+            data: [0, 15, 12, 8, 20],
+            borderColor: "#3b82f6",
+            fill: false,
+            tension: 0,
+            borderWidth: 2,
+            pointRadius: 5,
+            pointBackgroundColor: "#3b82f6",
+          },
+        ],
+      };
+
+      function makeCumulative(data) {
+        let cumulativeData = [];
+        let total = 0;
+        for (let i = 0; i < data.length; i++) {
+          total += data[i];
+          cumulativeData.push(total);
+        }
+        return cumulativeData;
+      }
+
+      const cumulativeEstimated = makeCumulative(initialData.datasets[0].data);
+      initialData.datasets[0].data = cumulativeEstimated;
+
+      const cumulativeCompleted = makeCumulative(initialData.datasets[1].data);
+      initialData.datasets[1].data = cumulativeCompleted;
+
+      const chart = new Chart(ctx, {
+        type: "line",
+        data: initialData,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: {
+                font: {
+                  size: 14,
+                },
+              },
+            },
+          },
+          scales: {
+            x: {
+              display: true,
+              title: {
+                display: true,
+                text: "Iteration",
+                font: {
+                  size: 30,
+                },
+                color: "#4a5568",
+              },
+              ticks: {
+                font: {
+                  size: 30,
+                },
+              },
+            },
+            y: {
+              display: true,
+              title: {
+                display: true,
+                text: "Points",
+                font: {
+                  size: 30,
+                },
+                color: "#4a5568",
+              },
+              ticks: {
+                beginAtZero: true,
+                font: {
+                  size: 30,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      function goToPreviousSlide() {
+        window.location.href = "slide5.html";
+      }
+      function goToNextSlide() {
+        window.location.href = "slide7.html";
+      }
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowRight") {
+          goToNextSlide();
+        }
+        if (event.key === "ArrowLeft") {
+          goToPreviousSlide();
+        }
+      });
+    </script>
+  </body>
+</html>
