@@ -1,7 +1,38 @@
+q# Coverage (Deno: deno test --coverage)
 coverage
 coverage.sh
+
+# Dependencies
+node_modules/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Deno / TypeScript
+*.tsbuildinfo
+
+# OS
+.DS_Store
+**/.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors and IDEs
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Project-specific
+commit-msg.sh
 public/.DS_Store
 public/script/spikes.js
-commit-msg.sh
-.DS_Store
-.vscode

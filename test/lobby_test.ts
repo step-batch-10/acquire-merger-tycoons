@@ -1,4 +1,4 @@
-import { assertEquals } from "assert";
+import { assertEquals } from "@std/assert";
 import { describe, it } from "testing/bdd";
 import { Lobby } from "../src/models/lobby.ts";
 import { GameManager } from "../src/models/game_manager.ts";

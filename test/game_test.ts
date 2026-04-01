@@ -1,4 +1,4 @@
-import { assertEquals, assertFalse } from "assert";
+import { assertEquals, assertFalse } from "@std/assert";
 import { beforeEach, describe, it } from "testing/bdd";
 import { stub } from "testing/mock";
 import { BuyStocks, Merger, MergeType } from "../src/models/merger.ts";
@@ -859,6 +859,19 @@ describe("Game model", () => {
 
         const result = game.distributeBonus("Imperial");
         assertEquals(result, []);
+      });
+
+      it("should return no bonus distribution when there are no players", () => {
+        const tiles = csv(
+          "6A 7A 8A 9A 9B 10B 11B 10A 6B 7B 12B 1I 10I 11H 10H 6H 7H 12H 1H",
+        );
+        const board = new Board([imperial, continental]);
+        const game = new StdGame(tiles, [], board);
+
+        stub(imperial, "getPrimaryBonus", () => 2000);
+        stub(imperial, "getSecondaryBonus", () => 1000);
+
+        assertEquals(game.distributeBonus("Imperial"), []);
       });
     });
 

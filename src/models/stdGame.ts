@@ -223,12 +223,16 @@ export class StdGame implements Game {
       playersStockCount,
       (value: { player: Player; count: number }) => value.count,
     );
-    const sortedByStockCount = _.sortBy(Object.keys(groupedByStockCount));
-    const highestStockCount = sortedByStockCount.at(-1);
-    const secondHighestStockCount = sortedByStockCount.at(-2);
+    const sortedKeys = _.sortBy(Object.keys(groupedByStockCount));
 
-    const primaryHolders = groupedByStockCount[highestStockCount];
-    const secondaryHolders = groupedByStockCount[secondHighestStockCount];
+    if (sortedKeys.length === 0) {
+      return { primaryHolders: [], secondaryHolders: [] };
+    }
+
+    const primaryHolders = groupedByStockCount[sortedKeys.at(-1)!];
+    const secondaryHolders = sortedKeys.length < 2
+      ? []
+      : groupedByStockCount[sortedKeys.at(-2)!];
 
     return { primaryHolders, secondaryHolders };
   }
@@ -243,10 +247,10 @@ export class StdGame implements Game {
     });
   }
 
-  private extractPlayerIds(
-    players: { player: PlayerDetails; count: number }[],
-  ) {
-    return players?.map((playerInfo) => playerInfo.player.playerId);
+  private extractPlayerIds(players: { player: Player; count: number }[]) {
+    return players?.map((playerInfo) =>
+      playerInfo.player.getPlayerDetails().playerId
+    );
   }
 
   distributeBonus(hotelName: HotelName): BonusDistribution {
@@ -258,10 +262,15 @@ export class StdGame implements Game {
     const { primaryHolders, secondaryHolders } = this
       .getPrimaryAndSecondaryHolders(hotelName);
 
+    if (primaryHolders.length === 0) return [];
+
     const primaryHolderIds = this.extractPlayerIds(primaryHolders);
     const secondaryHolderIds = this.extractPlayerIds(secondaryHolders);
 
-    if (primaryHolders.length > 1 || secondaryHolders[0].count === 0) {
+    if (
+      primaryHolders.length > 1 ||
+      (secondaryHolders.length > 0 && secondaryHolders[0].count === 0)
+    ) {
       const bonus = primaryBonus + secondaryBonus;
       this.creditBonusToPlayers(primaryHolderIds, bonus);
 

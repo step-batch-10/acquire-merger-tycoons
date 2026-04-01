@@ -129,8 +129,8 @@ export class Merger implements Game {
   }
 
   private getHighestAndSmallestHotel(hotels: HotelDetails[]): HotelDetails[] {
-    const highest = _.maxBy(hotels, "size");
-    const lowest = _.minBy(hotels, "size");
+    const highest = _.maxBy(hotels, "size")!;
+    const lowest = _.minBy(hotels, "size")!;
 
     return [highest, lowest];
   }
