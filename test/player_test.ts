@@ -1,4 +1,4 @@
-import { assert, assertEquals, assertFalse } from "assert";
+import { assert, assertEquals, assertFalse } from "@std/assert";
 import { describe, it } from "testing/bdd";
 import { Player } from "../src/models/player.ts";
 

@@ -1,4 +1,4 @@
-import { assertEquals, assertFalse } from "assert";
+import { assertEquals, assertFalse } from "@std/assert";
 import { beforeEach, describe, it } from "testing/bdd";
 import { stub } from "testing/mock";
 import { BuyStocks, Merger, MergeType } from "../src/models/merger.ts";

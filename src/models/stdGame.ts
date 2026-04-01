@@ -227,8 +227,12 @@ export class StdGame implements Game {
     const highestStockCount = sortedByStockCount.at(-1);
     const secondHighestStockCount = sortedByStockCount.at(-2);
 
-    const primaryHolders = groupedByStockCount[highestStockCount];
-    const secondaryHolders = groupedByStockCount[secondHighestStockCount];
+    const primaryHolders = highestStockCount !== undefined
+      ? groupedByStockCount[highestStockCount] ?? []
+      : [];
+    const secondaryHolders = secondHighestStockCount !== undefined
+      ? groupedByStockCount[secondHighestStockCount] ?? []
+      : [];
 
     return { primaryHolders, secondaryHolders };
   }
@@ -243,10 +247,10 @@ export class StdGame implements Game {
     });
   }
 
-  private extractPlayerIds(
-    players: { player: PlayerDetails; count: number }[],
-  ) {
-    return players?.map((playerInfo) => playerInfo.player.playerId);
+  private extractPlayerIds(players: { player: Player; count: number }[]) {
+    return players?.map((playerInfo) =>
+      playerInfo.player.getPlayerDetails().playerId
+    );
   }
 
   distributeBonus(hotelName: HotelName): BonusDistribution {

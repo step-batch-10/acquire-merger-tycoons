@@ -1,4 +1,4 @@
-import { assert, assertEquals, assertFalse } from "assert";
+import { assert, assertEquals, assertFalse } from "@std/assert";
 import { describe, it } from "testing/bdd";
 import { Board, TileStatus } from "../src/models/board.ts";
 import { Hotel } from "../src/models/hotel.ts";
