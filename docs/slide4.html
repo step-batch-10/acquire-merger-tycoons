@@ -128,7 +128,7 @@
 
       const totalLines = languageData.reduce(
         (sum, item) => sum + item.lines,
-        0
+        0,
       );
 
       const barContainer = document.getElementById("barContainer");
@@ -147,7 +147,8 @@
         const label = document.createElement("div");
         label.className = "label";
         label.style.flexBasis = `${percent}%`;
-        label.innerHTML = `<span>${item.name}</span><span>${item.lines} Lines</span>`;
+        label.innerHTML =
+          `<span>${item.name}</span><span>${item.lines} Lines</span>`;
 
         barContainer.appendChild(bar);
         labelContainer.appendChild(label);
